@@ -1,25 +1,39 @@
-# 🎬 Movie Recommender System
+# Movie Recommender System
 
-This project is a **content-based movie recommender system** that suggests movies similar to a user's favorite title by analyzing textual metadata such as genres, cast, crew, and keywords.
+This project is a content-based movie recommender system that suggests movies similar to a user's favorite title by analyzing textual metadata such as genres, cast, crew, and keywords.
 
-## 🚀 Features
+## Features
 
 - Recommends top 5 similar movies using cosine similarity
-- Extracts meaningful features using `CountVectorizer`
-- Combines multiple metadata fields for personalized recommendations
-- Built with Python and popular libraries like pandas and scikit-learn
+- Extracts meaningful features using CountVectorizer from combined metadata
+- Fetches movie posters dynamically using TMDb API
+- Built with Python and popular libraries like pandas, scikit-learn, and Streamlit for interactive UI
 
-## 📁 Dataset
+## Live Demo
 
-The dataset used is a modified version of the [TMDb 5000 Movie Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata), which includes:
-- `movies.csv`
-- `credits.csv`
+Try the live deployed app here:
+Movie Recommender System on Streamlit Cloud
+[https://movie-recommender-system-priyanshuverma87.streamlit.app/]
 
-## 🛠️ Technologies Used
+## Demo
 
-- Python 3
-- pandas
-- NumPy
-- scikit-learn
-- nltk 
-- ast
+![Movie Recommender App](movie-recommender-demo.png)
+
+
+## Dataset
+
+The dataset used is a modified version of the TMDb 5000 Movie Dataset, which includes:
+- movies.csv
+- credits.csv
+
+These datasets are preprocessed to extract relevant features and save similarity matrices for recommendations.
+
+## Technologies Used
+
+- Python 3.7+
+- pandas – Data manipulation and analysis
+- NumPy – Numerical computing
+- scikit-learn – Feature extraction and similarity computation
+- nltk – Text processing
+- requests – HTTP requests to fetch movie posters from TMDb API
+- Streamlit – Building and deploying interactive web apps
