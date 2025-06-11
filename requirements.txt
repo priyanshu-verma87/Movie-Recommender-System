@@ -3,4 +3,6 @@ numpy
 scikit-learn
 nltk
 ast
-jupyter
+streamlit>=1.35.0
+requests>=2.31.0
+
