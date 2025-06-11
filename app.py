@@ -2,15 +2,31 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import gdown
+import os
 
-# TMDb API Key
-API_KEY = "3cf25cc40dc2027311c6ca390f2bc44d"
+# -----------------------------
+# TMDb API Key 
+# -----------------------------
+API_KEY = "3cf25cc40dc2027311c6ca390f2bc44d"  
 
-# Load pickled data
+# -----------------------------
+# Download similarity.pkl from Google Drive if not present
+# -----------------------------
+SIMILARITY_FILE = "similarity.pkl"
+DRIVE_FILE_ID = "1vzUgzoPKTqp3JbSDKBLmGsYQX-VVlRn2"
+if not os.path.exists(SIMILARITY_FILE):
+    gdown.download(f"https://drive.google.com/uc?id={DRIVE_FILE_ID}", SIMILARITY_FILE, quiet=False)
+
+# -----------------------------
+# Load Pickled Data
+# -----------------------------
 movies = pickle.load(open('movies.pkl', 'rb'))
-similarity = pickle.load(open('similarity.pkl', 'rb'))
+similarity = pickle.load(open(SIMILARITY_FILE, 'rb'))
 
-# Fetch poster using TMDb API
+# -----------------------------
+# Poster Fetcher: By Title
+# -----------------------------
 def fetch_poster_by_title(title):
     try:
         query = title.replace(" ", "%20")
@@ -26,7 +42,9 @@ def fetch_poster_by_title(title):
         print(f"[ERROR] Poster fetch failed for '{title}': {e}")
     return "https://via.placeholder.com/500x750?text=No+Image"
 
-# Recommend function
+# -----------------------------
+# Recommender Logic
+# -----------------------------
 def recommend(movie_title):
     try:
         index = movies[movies['title'] == movie_title].index[0]
@@ -45,7 +63,9 @@ def recommend(movie_title):
 
     return recommended_titles, recommended_posters
 
+# -----------------------------
 # Streamlit UI
+# -----------------------------
 st.set_page_config(page_title="Movie Recommender", layout="wide")
 st.title("🎬 Movie Recommender System")
 
@@ -55,12 +75,10 @@ if st.button("Recommend"):
     titles, posters = recommend(selected_movie)
 
     if titles:
-        st.markdown("### Recommended Movies")
-        cols = st.columns(len(titles))  # dynamically create 5 columns
-
-        for i in range(len(titles)):
+        cols = st.columns(5)
+        for i in range(5):
             with cols[i]:
-                st.image(posters[i], width=250)
+                st.image(posters[i], use_container_width=True)
                 st.caption(titles[i])
     else:
         st.warning("No recommendations found. Try another movie.")
